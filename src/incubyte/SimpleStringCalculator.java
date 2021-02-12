@@ -23,8 +23,8 @@ return true;
 }
 public static int Add(String args) throws IllegalArgumentException
 {
-int sum;
-String delimeter;
+int sum,i;
+String delimeter,exceptionString;
 if(args.trim().isEmpty()) return 0;
 delimeter=getDelimeter(args);
 if(!isValid(args,delimeter)) throw new IllegalArgumentException("Invalid string : "+args);
@@ -32,7 +32,14 @@ String nums[];
 if(!hasDelimeter) nums=args.replaceAll("\n",delimeter).trim().split(delimeter);
 else nums=args.substring(args.indexOf("]\n")+2).replaceAll("\n",delimeter).trim().split(delimeter);
 sum=0;
-for(String num:nums) sum+=Integer.parseInt(num.trim());
+exceptionString="Negative number(s) : ";
+for(String num:nums)
+{
+i=Integer.parseInt(num.trim());
+if(i<0) exceptionString+=i+",";
+sum+=Integer.parseInt(num.trim());
+}
+if(exceptionString.length()>21) throw new IllegalArgumentException(exceptionString);
 return sum;
 }
 }
